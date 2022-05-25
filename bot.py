@@ -1,8 +1,6 @@
-from distutils.log import error
 import json
 import logging
 import aiohttp
-import asyncio
 import time
 
 class Bot:

@@ -1,8 +1,6 @@
-from email import message
 import json
 import logging
 from pprint import pformat
-import time
 
 from bilibot import BiliBot
 from douban_bot import DoubanBot
