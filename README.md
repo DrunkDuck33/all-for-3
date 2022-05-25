@@ -11,7 +11,7 @@ https://github.com/DrunkDuck33/all-for-3/blob/master/controller.py#L44
 
 參考[繞過 Android SSL Pinning](https://juejin.cn/post/6931940051496468494)，再繞過Pinning之後抓包獲取一個32位的auth。
 
-###Bilibili接口
+### Bilibili接口
 
 基本上就是抓Chrome的包。`BiliBot.get_app_info`為app端包重放，如果需要修改vmid的話，參考[哔哩哔哩Sign计算](https://github.com/lkeme/Enc2Dec/blob/master/Bilibili/sign.py)去修改簽名。
 
