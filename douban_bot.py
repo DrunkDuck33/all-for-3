@@ -148,9 +148,6 @@ class DoubanBot(Bot):
         return not is_private
 
     async def update(self, text:str, test=False) -> None:
-        await self.post_comment(self.config["douban_topic_id"], text, test=test)
-        time.sleep(1)
-
         topic_text = text
         for dangerous_word in self.potential_dangerous:
             if dangerous_word in topic_text:
@@ -175,6 +172,7 @@ class DoubanBot(Bot):
                         self.logger.info("This is not included? Check it")
                         topic_text = "Bot好像出了点问题"
                     break
-
+        await self.post_comment(self.config["douban_topic_id"], topic_text, test=test)
+        time.sleep(1)
         await self.edit_topic(self.config["douban_topic_id"], "望夫石", test=test, change_content=True, text=topic_text)
         time.sleep(1)
