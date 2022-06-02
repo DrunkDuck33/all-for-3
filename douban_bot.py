@@ -7,7 +7,7 @@ import asyncio
 
 from bot import Bot
 
-topic_template = """嘘，不要去原视频下打扰哦～\n----------\n{}\n----------\n"""
+topic_template = """嘘，不要去原视频下打扰哦～\nFor special reasons, it only notifies the change but the content of change for now\n----------\n{}\n----------\n"""
 
 class DoubanBot(Bot):
     header = {
@@ -16,6 +16,23 @@ class DoubanBot(Bot):
     }
     auth = None
     potential_dangerous = ["改名", "签名", "直播标题", "动态", "追番", "BV", "大哥的新置顶，快去找她聊天吧"]
+    sixfour_replace = {
+        "改名啦": "😚",
+        "长🎤啦": "🎤",
+        "换头像": "🏳️",
+        "改签名": "✒️",
+        "上/下播": "⁉️⁉️⁉️",
+        "直播标题": "⁉️⁉️",
+        "直播封面": "⁉️⁉️",
+        "PC头图": "💻",
+        "改生日": "🎂",
+        "投币乐": "🪙",
+        "新动态": "📖",
+        "新追番": "📺",
+        "改头图": "🐰",
+        "新置顶": "🔝",
+        "置顶撤": "🈚️🔝"
+    }
     last_post = -1
 
     def __init__(self) -> None:
@@ -149,6 +166,7 @@ class DoubanBot(Bot):
 
     async def update(self, text:str, test=False) -> None:
         topic_text = text
+        '''
         for dangerous_word in self.potential_dangerous:
             if dangerous_word in topic_text:
                 is_safe = await self.is_safe(topic_text)
@@ -172,6 +190,12 @@ class DoubanBot(Bot):
                         self.logger.info("This is not included? Check it")
                         topic_text = "Bot好像出了点问题"
                     break
+        '''
+        for word in self.sixfour_replace.keys():
+            if word in topic_text:
+                topic_text = self.sixfour_replace[word]
+                break
+
         await self.post_comment(self.config["douban_topic_id"], topic_text, test=test)
         time.sleep(1)
         await self.edit_topic(self.config["douban_topic_id"], "望夫石", test=test, change_content=True, text=topic_text)
