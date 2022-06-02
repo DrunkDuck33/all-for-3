@@ -21,10 +21,11 @@ class BiliBot(Bot):
             r[s[a]]=key[av//58**a%58]
         return ''.join(r)
     
-    async def get_dynamic(self) -> Dynamic:
+    async def get_dynamic(self):
         url = f"https://api.vc.bilibili.com/dynamic_svr/v1/dynamic_svr/space_history?host_uid={self.uid}&need_top=0"
         all_dynamics = await self.bot_get(url=url)
         new_dynamic = None
+        forum_uid = 0
         if all_dynamics != {}:
             dynamic = all_dynamics["data"]["cards"][0]
             type = dynamic["desc"]["type"]
@@ -50,8 +51,12 @@ class BiliBot(Bot):
                 new_dynamic = LongDynamic(card)
                 new_dynamic.timestamp = ts
             new_dynamic.oid = dynamic["desc"]["dynamic_id"]
-            return new_dynamic
-        return None
+
+            for d in all_dynamics["data"]["cards"]:
+                if d["desc"]["type"] == 4:
+                    forum_uid = d["desc"]["dynamic_id"]
+                    return new_dynamic, forum_uid
+        return None, None
 
     async def get_info(self) -> dict:
         url = f"https://api.bilibili.com/x/space/acc/info?mid={self.uid}"
@@ -80,7 +85,7 @@ class BiliBot(Bot):
 
     async def get_all_metadata(self) -> dict:
         try:
-            dynamic = await self.get_dynamic()
+            dynamic, forum_oid = await self.get_dynamic()
         except:
             self.logger.fatal("Cannot get dynamic")
             return {}
@@ -92,7 +97,7 @@ class BiliBot(Bot):
             return {}
         time.sleep(1)
         try:
-            replies = await self.get_top_reply(dynamic.oid)
+            replies = await self.get_top_reply(forum_oid if forum_oid != 0 else 662016827293958168)
         except:
             self.logger.fatal("Cannot get replies")
             return {}
@@ -125,12 +130,14 @@ class BiliBot(Bot):
                 "dynamic":                  dynamic,
                 # This is mobile top photo
                 "bili_app_top_photo":       app_info["data"]["images"]["imgUrl"].split("space/")[1],
+                "bili_forum_oid":           forum_oid if forum_oid != 0 else 662016827293958168,
                 "bili_top_reply":           replies["data"]["top_replies"][0]["content"]["message"] if replies["data"]["top_replies"] is not None else ""
             }
         except Exception as e:
             self.logger.info(info)
             self.logger.info(dynamic.summary)
             self.logger.info(app_info)
+            self.logger.info(replies)
             self.logger.fatal("Cannot return bili data")
             self.logger.fatal(e)
             return {}

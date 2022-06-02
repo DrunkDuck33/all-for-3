@@ -5,6 +5,7 @@ from pprint import pformat
 from bilibot import BiliBot
 from douban_bot import DoubanBot
 from pushdeerbot import PushdeerBot
+from dynamic import VideoDynamic
 
 class Controller:
     message_queue = []
@@ -79,7 +80,10 @@ class Controller:
                 self.message_queue.append(f"大哥给 {bili_info['bili_last_coined']} 投币乐")
                 self.last_updates["bili_last_coined"] = bili_info["bili_last_coined"]
             if bili_info["dynamic"].timestamp > self.last_updates["bili_dynamic_last_update"]:
-                self.message_queue.append(f"大哥发新动态了！！\n\n" + bili_info["dynamic"].summary)
+                if type(bili_info["dynamic"]) is VideoDynamic:
+                    self.message_queue.append(f"大哥发新视频了！！\n\n" + bili_info["dynamic"].summary)
+                else:
+                    self.message_queue.append(f"大哥发新动态了！！\n\n" + bili_info["dynamic"].summary)
                 self.last_updates["bili_dynamic_last_update"] = bili_info["dynamic"].timestamp + 1
             if bili_info["bili_last_watched"] != self.last_updates["bili_last_watched"]:
                 self.message_queue.append(f"大哥的新追番！\n" + bili_info["bili_last_watched"])
