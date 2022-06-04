@@ -1,0 +1,9 @@
+{
+    "Content-Type": "application/octet-stream",
+    "M-Encoding": "m1",
+    "Connection": "keep-alive",
+    "Mask": "REDACTED",
+    "User-Agent": "Mozilla/5.0 (iPhone; CPU iPhone OS 15_4_1 like Mac OS X) AppleWebKit/600.1.4 (KHTML, like Gecko) Mobile/12A365 QQMusic/11.6.8 Mskin/white Mcolor/22d59cff Bcolor/00000000 skinid[902] NetType/WIFI WebView/UIWebView Released[1] zh-CN DeviceModel/iPhone14,3 skin_css/skin2_1_902 Pixel/1284 FreeFlow/0 teenMode/0 nft_released/[1] ui_mode/1 FontMode/0] ",
+    "Sign": "REDACTED",
+    "x-sign-data-type": "json"
+}

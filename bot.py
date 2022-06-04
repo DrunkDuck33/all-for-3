@@ -44,6 +44,12 @@ class Bot:
                     self.logger.info(msg)
                 return await resp.json()
 
+    async def bot_post_raw(self, url, data, header):
+        timeout = aiohttp.ClientTimeout(total=10)
+        async with aiohttp.ClientSession() as session:
+            async with session.post(url=url, data=data, headers=header, timeout=timeout) as resp:
+                return await resp.content.read()
+
     async def bot_get(self, url: str, header: dict={}, test=False) -> dict:
         if test:
             return {}
