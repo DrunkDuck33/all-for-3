@@ -75,7 +75,8 @@ class Controller:
             self.logger.info(f"大哥关注/取关人啦！\n原：{self.last_updates['bili_followers']} \n现：{bili_info['bili_followers']}")
             self.last_updates["bili_followers"] = bili_info["bili_followers"]
         if bili_info["bili_last_coined"] != self.last_updates["bili_last_coined"]:
-            self.message_queue.append(f"大哥给 {bili_info['bili_last_coined']} 投币乐")
+            # self.message_queue.append(f"大哥给 {bili_info['bili_last_coined']} 投币乐")
+            self.logger.info(f"大哥给 {bili_info['bili_last_coined']} 投币乐")
             self.last_updates["bili_last_coined"] = bili_info["bili_last_coined"]
         if bili_info["dynamic"].timestamp > self.last_updates["bili_dynamic_last_update"]:
             if type(bili_info["dynamic"]) is VideoDynamic:
