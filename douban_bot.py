@@ -15,7 +15,16 @@ class DoubanBot(Bot):
         "Authorization": None
     }
     auth = None
-    potential_dangerous = ["改名", "签名", "直播标题", "动态", "追番", "BV", "大哥的新置顶，快去找她聊天吧"]
+    potential_dangerous = { "改名": "大哥改名了！",
+                            "签名": "大哥改签名了！",
+                            "直播标题": "大哥改直播标题了！",
+                            "BV": None,  # Line's here
+                            "视频": "大哥的新视频！",
+                            "大哥发新动态": "大哥发新动态了！",
+                            "追番": "大哥有新追番了！",
+                            "大哥的新置顶，快去找她聊天吧": "大哥的新置顶，快去找她聊天吧～",
+                            "大哥在QQ音乐的新动态": "大哥在QQ音乐的新动态！"
+                        }
     sixfour_replace = {
         "改名啦": "😚",
         "长🎤啦": "🎤",
@@ -168,28 +177,13 @@ class DoubanBot(Bot):
 
     async def update(self, text:str, test=False) -> None:
         topic_text = text
-        '''
-        for dangerous_word in self.potential_dangerous:
+        for dangerous_word in self.potential_dangerous.keys():
             if dangerous_word in topic_text:
                 is_safe = await self.is_safe(topic_text)
                 if not is_safe:
-                    if "改名" in topic_text:
-                        topic_text = "大哥改名了！"
-                    elif "签名" in topic_text:
-                        topic_text = "大哥改签名了！"
-                    elif "直播标题" in topic_text:
-                        topic_text = "大哥改直播标题了！"
-                    elif "追番" in topic_text:
-                        topic_text = "大哥有新追番了！"
-                    elif "BV" in topic_text:
-                        topic_text = topic_text[:4+10] + " 投币乐"
-                    elif "动态" in topic_text:
-                        topic_text = "大哥发新动态了！！"
-                    elif "大哥的新置顶，快去找她聊天吧":
-                        topic_text = "大哥的新置顶，快去找她聊天吧～"
-                    else:
-                        self.logger.info(topic_text)
-                        self.logger.info("This is not included? Check it")
+                    try:
+                        topic_text = self.potential_dangerous[dangerous_word]
+                    except:
                         topic_text = "Bot好像出了点问题"
                     break
         '''
@@ -197,7 +191,7 @@ class DoubanBot(Bot):
             if word in topic_text:
                 topic_text = self.sixfour_replace[word]
                 break
-
+        '''
         await self.post_comment(self.config["douban_topic_id"], topic_text, test=test)
         time.sleep(1)
         await self.edit_topic(self.config["douban_topic_id"], "望夫石", test=test, change_content=True, text=topic_text)
