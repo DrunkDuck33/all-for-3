@@ -97,7 +97,7 @@ class BiliBot(Bot):
             return {}
         time.sleep(1)
         try:
-            replies = await self.get_top_reply(forum_oid if forum_oid != 0 else 662016827293958168)
+            replies = await self.get_top_reply(662016827293958168)
         except:
             self.logger.fatal("Cannot get replies")
             return {}

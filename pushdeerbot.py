@@ -13,4 +13,4 @@ class PushdeerBot(Bot):
             "text": text,
             "desp": ""
         }
-        await self.bot_post(url=url, data=data, header={}, msg="push pushdeer")
+        await self.bot_post(url=url, data=data, header={}, msg=f"push pushdeer: {text}")
