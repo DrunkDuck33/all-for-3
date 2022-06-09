@@ -52,10 +52,14 @@ class BiliBot(Bot):
                 new_dynamic.timestamp = ts
             new_dynamic.oid = dynamic["desc"]["dynamic_id"]
 
+            # BoForum is fixed, so forum_uid is not likedly to be used
+            return new_dynamic, -1
+            '''
             for d in all_dynamics["data"]["cards"]:
                 if d["desc"]["type"] == 4:
                     forum_uid = d["desc"]["dynamic_id"]
                     return new_dynamic, forum_uid
+            '''
         return None, None
 
     async def get_info(self) -> dict:
@@ -85,7 +89,7 @@ class BiliBot(Bot):
 
     async def get_all_metadata(self) -> dict:
         try:
-            dynamic, forum_oid = await self.get_dynamic()
+            dynamic, _ = await self.get_dynamic()
         except:
             self.logger.fatal("Cannot get dynamic")
             return {}
@@ -130,7 +134,6 @@ class BiliBot(Bot):
                 "dynamic":                  dynamic,
                 # This is mobile top photo
                 "bili_app_top_photo":       app_info["data"]["images"]["imgUrl"].split("space/")[1],
-                "bili_forum_oid":           forum_oid if forum_oid != 0 else 662016827293958168,
                 "bili_top_reply":           replies["data"]["top_replies"][0]["content"]["message"] if replies["data"]["top_replies"] is not None else ""
             }
         except Exception as e:
