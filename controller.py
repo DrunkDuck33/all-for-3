@@ -118,3 +118,6 @@ class Controller:
             await self.update_pushdeer()
 
             self.message_queue = []
+
+    async def throw_error(self):
+        await self.pushdeer_bot.push_notification("Exited.")

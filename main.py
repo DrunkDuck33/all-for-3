@@ -1,6 +1,11 @@
 from controller import Controller
 import asyncio
+import traceback
 
 c = Controller()
 loop = asyncio.get_event_loop()
-loop.run_until_complete(c.run())
+try:
+    loop.run_until_complete(c.run())
+except:
+    loop.run_until_complete(c.throw_error())
+    traceback.print_exc()
