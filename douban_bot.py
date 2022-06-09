@@ -7,7 +7,7 @@ import asyncio
 
 from bot import Bot
 
-topic_template = """嘘，不要去原视频下打扰哦～\nFor special reasons, it only notifies the change but the content of change for now\n----------\n{}\n----------\n"""
+topic_template = """嘘，不要去原视频下打扰哦～\n----------\n{}\n----------\n"""
 
 class DoubanBot(Bot):
     header = {
