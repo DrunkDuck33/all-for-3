@@ -98,9 +98,7 @@ class Controller:
             self.last_updates["bili_top_reply"] = bili_info["bili_top_reply"]
 
     def process_qqmusic_info(self, qmusic_info):
-        new_dynamic = qmusic_info["QMHomePageHeaderCgi249"]["data"]["TabDetail"]["MomentTab"]["List"][0]["v_feed"][0]["v_cell"][1]["text"]
-        idx = new_dynamic["v_topic"][0]["start_pos"]
-        dynamic_text = new_dynamic["content2"][:idx] + new_dynamic["v_topic"][0]["text"] + new_dynamic["content2"][idx:]
+        dynamic_text = qmusic_info["qmusic_dynamic"]
         if dynamic_text != self.last_updates["qmusic_dynamic"]:
             self.message_queue.append("大哥在QQ音乐的新动态！\n\n" + dynamic_text)
             self.last_updates["qmusic_dynamic"] = dynamic_text

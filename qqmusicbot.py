@@ -25,4 +25,13 @@ class QQMusicBot(Bot):
     async def get_new_post(self):
         url = "https://u.y.qq.com/cgi-bin/musics.fcg"
         qmusic_info = self.decode_octetstream(await self.bot_post_raw(url=url, header=self.headers, data=self.data))
-        return qmusic_info
+        try:
+            new_dynamic = qmusic_info["QMHomePageHeaderCgi249"]["data"]["TabDetail"]["MomentTab"]["List"][0]["v_feed"][0]["v_cell"][1]["text"]
+            idx = new_dynamic["v_topic"][0]["start_pos"]
+            dynamic_text = new_dynamic["content2"][:idx] + new_dynamic["v_topic"][0]["text"] + new_dynamic["content2"][idx:]
+        except:
+            self.logger.info("Cannot get qmusic info")
+            return {}
+        return {
+            "qmusic_dynamic": dynamic_text
+        }
