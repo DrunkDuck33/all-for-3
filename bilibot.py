@@ -94,12 +94,14 @@ class BiliBot(Bot):
             self.logger.fatal("Cannot get dynamic")
             return {}
         time.sleep(1)
+        '''
         try:
             info = await self.get_info()
         except:
             self.logger.fatal("Cannot get info")
             return {}
         time.sleep(1)
+        '''
         try:
             replies = await self.get_top_reply(662016827293958168)
         except:
@@ -126,8 +128,8 @@ class BiliBot(Bot):
                 "bili_live_title":          app_info["data"]["live"]["title"],
                 "bili_live_cover":          app_info["data"]["live"]["cover"],
                 # This is pc top photo
-                "bili_top_photo":           info["data"]["top_photo"].split("space/")[1],
-                "bili_birthday":            info["data"]["birthday"],
+                # "bili_top_photo":           info["data"]["top_photo"].split("space/")[1],
+                # "bili_birthday":            info["data"]["birthday"],
                 "bili_followers":           app_info["data"]["card"]["attention"],
                 "bili_last_coined":         self.av_to_bv(app_info["data"]["coin_archive"]["item"][0]["param"]) + " " + app_info["data"]["coin_archive"]["item"][0]["title"],
                 "bili_last_watched":        app_info["data"]["season"]["item"][0]["title"],
@@ -137,10 +139,10 @@ class BiliBot(Bot):
                 "bili_top_reply":           replies["data"]["top_replies"][0]["content"]["message"] if replies["data"]["top_replies"] is not None else ""
             }
         except Exception as e:
-            self.logger.info(info)
+            # self.logger.info(info)
             self.logger.info(dynamic.summary)
             self.logger.info(app_info)
-            self.logger.info(replies)
+            # self.logger.info(replies)
             self.logger.fatal("Cannot return bili data")
             self.logger.fatal(e)
             return {}

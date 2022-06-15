@@ -64,12 +64,14 @@ class Controller:
         if bili_info["bili_live_cover"] is not None and bili_info["bili_live_cover"] != self.last_updates["bili_live_cover"]:
             self.message_queue.append(f"大哥改直播封面啦！\n原：http://i0.hdslb.com/bfs/live/user_cover/{self.last_updates['bili_live_cover']} \n现：http://i0.hdslb.com/bfs/live/user_cover/{bili_info['bili_live_cover']}")
             self.last_updates["bili_live_cover"] = bili_info["bili_live_cover"]
+        '''
         if bili_info["bili_top_photo"] is not None and bili_info["bili_top_photo"] != self.last_updates["bili_top_photo"]:
             self.message_queue.append(f"大哥改PC头图啦！\n原：http://i1.hdslb.com/bfs/space/{self.last_updates['bili_top_photo']} \n现：http://i1.hdslb.com/bfs/space/{bili_info['bili_top_photo']}")
             self.last_updates["bili_top_photo"] = bili_info["bili_top_photo"]
         if bili_info["bili_birthday"] != self.last_updates["bili_birthday"]:
             self.message_queue.append(f"大哥改生日啦！\n原：{self.last_updates['bili_birthday']} \n现：{bili_info['bili_birthday']}")
             self.last_updates["bili_birthday"] = bili_info["bili_birthday"]
+        '''
         if bili_info["bili_followers"] != self.last_updates["bili_followers"]:
             # self.message_queue.append(f"大哥关注/取关人啦！\n原：{self.last_updates['bili_followers']} \n现：{bili_info['bili_followers']}")
             self.logger.info(f"大哥关注/取关人啦！\n原：{self.last_updates['bili_followers']} \n现：{bili_info['bili_followers']}")
