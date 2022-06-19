@@ -87,7 +87,8 @@ class Controller:
                 self.message_queue.append(f"大哥发新动态了！！\n\n" + bili_info["dynamic"].summary)
             self.last_updates["bili_dynamic_last_update"] = bili_info["dynamic"].timestamp + 1
         if bili_info["bili_last_watched"] != self.last_updates["bili_last_watched"]:
-            self.message_queue.append(f"大哥的新追番！\n" + bili_info["bili_last_watched"])
+            # self.message_queue.append(f"大哥的新追番！\n" + bili_info["bili_last_watched"])
+            self.logger.info(f"大哥的新追番！\n" + bili_info["bili_last_watched"])
             self.last_updates["bili_last_watched"] = bili_info["bili_last_watched"]
         if bili_info["bili_app_top_photo"] is not None and bili_info["bili_app_top_photo"] != self.last_updates["bili_app_top_photo"]:
             self.message_queue.append(f"大哥改头图啦！\n原：http://i1.hdslb.com/bfs/space/{self.last_updates['bili_app_top_photo']} \n现：http://i1.hdslb.com/bfs/space/{bili_info['bili_app_top_photo']}")
